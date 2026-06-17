@@ -1,6 +1,9 @@
 package service;
 
 import java.util.ArrayList;
+
+import enums.OrderStatus;
+import enums.PaymentStatus;
 import model.Order;
 
 public class OrderService {
@@ -22,6 +25,24 @@ public class OrderService {
             }
         }
         return null;
+    }
+
+    public void processPayment(Order order){
+
+        PaymentStatus paymentStatus = order.getPaymentStatus();
+        
+        if(paymentStatus.equals(PaymentStatus.PENDING)){
+            order.setPaymentStatus(PaymentStatus.PAID);
+        }
+    }
+
+    public void shipOrder(Order order){
+
+        OrderStatus orderStatus = order.getOrderStatus();
+
+        if(orderStatus.equals(OrderStatus.PREPARING) ){
+            order.setOrderStatus(OrderStatus.SHIPPED);
+        }
     }
 }
 
